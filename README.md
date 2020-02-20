@@ -13,22 +13,22 @@
 - vytvořil jsem maven wrapper pro snadné spuštění pomocí: *mvnw spring-boot:run*
 - na mém počítači mi vše fungovalo, tak doufám, že bude i Vám
 
-#### Endpointy (příklad)
+#### Endpointy (příklady)
 
-- POST http://localhost:8080/person/create
+- POST localhost:8080/person/create
     - Content-Type application/json
     - body: {"name":"Karel","surname":"Novák"}
-- POST http://localhost:8080/person/{id Karla Nováka}/request/create
+- POST localhost:8080/person/{id Karla Nováka}/request/create
     - Content-Type application/json
     - body: {"requestType":"1","policyNumber":"152","requestText":"text"}
-- GET http://localhost:8080/person/all
-- GET http://localhost:8080/person/{id Karla Nováka}/request/all
-- PUT http://localhost:8080/person/{id Karla Nováka}/request/update/{id requestu}
+- GET localhost:8080/person/all
+- GET localhost:8080/person/{id Karla Nováka}/request/all
+- PUT localhost:8080/person/{id Karla Nováka}/request/update/{id requestu}
     - Content-Type application/json
     - body: {"requestType":"1","policyNumber":"152","requestText":"jiny text"}
-- GET http://localhost:8080/person/{id Karla Nováka}/request/all
-- DELETE http://localhost:8080/person/{id Karla Nováka}/request/delete/{id requestu}
-- GET http://localhost:8080/person/{id Karla Nováka}/request/all
+- GET localhost:8080/person/{id Karla Nováka}/request/all
+- DELETE localhost:8080/person/{id Karla Nováka}/request/delete/{id requestu}
+- GET localhost:8080/person/{id Karla Nováka}/request/all
 
 #### Co jsem nestihl za daný limit 1MD:
 
