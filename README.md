@@ -15,7 +15,7 @@
 
 #### Endpointy (příklad)
 
-- POST http://localhost:8080/person/create
+- POST localhost:8080/person/create
     - Content-Type application/json
     - body: {"name":"Karel","surname":"Novák"}
 - POST http://localhost:8080/person/{id Karla Nováka}/request/create
