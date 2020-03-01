@@ -28,8 +28,7 @@ public class RequestService {
     public List<Request> getAllRequests(long personId) throws Exception {
         if (!personRepository.existsById(personId))
             throw new Exception("Person " + personId + " not found");
-        List<Request> requests = requestRepository.findAll();
-        return removeOtherPersonIds(requests, personId);
+        return requestRepository.findAllByPersonId(personId);
     }
 
     /**
@@ -93,20 +92,5 @@ public class RequestService {
                 .orElseThrow(() -> new Exception("Request " + requestId + " belonging to person " + personId + " not found"));
 
         requestRepository.delete(request);
-    }
-
-    /**
-     * I apologize for this, it is very ugly. I believe RequestRepository can be used to make it prettier
-     * Removes all requests that do not belong to he given person
-     * First it removes requests with no person attached to them and then those with a different one
-     *
-     * @param requests list of all requests to be update
-     * @param personId person owning the requests
-     * @return updated list of requests
-     */
-    private List<Request> removeOtherPersonIds(List<Request> requests, long personId) {
-        requests.removeIf(value -> value.getPerson() == null);
-        requests.removeIf(value -> value.getPerson().getId() != personId);
-        return requests;
     }
 }

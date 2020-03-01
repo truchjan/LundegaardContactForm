@@ -4,6 +4,7 @@ import cz.lundegaard.form.entity.KindOfRequest;
 import cz.lundegaard.form.entity.Request;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -17,4 +18,6 @@ public interface RequestRepository extends JpaRepository<Request, Long> {
     Optional<Request> findByPolicyNumber(long policyNumber);
 
     Optional<Request> findByRequestText(String requestText);
+
+    List<Request> findAllByPersonId(long personId);
 }
