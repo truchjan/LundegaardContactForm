@@ -49,9 +49,10 @@ public class PersonController {
      * @return response entity
      */
     @ResponseBody
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public ResponseEntity createPerson(@RequestBody Person person) {
-        return ResponseEntity.ok(personService.createPerson(person));
+    public Person createPerson(@RequestBody Person person) {
+        return personService.createPerson(person);
     }
 
     /**

@@ -55,9 +55,10 @@ public class RequestController {
      * @throws Exception thrown if person is not found
      */
     @ResponseBody
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public ResponseEntity createRequest(@PathVariable long personId, @RequestBody Request request) throws Exception {
-        return ResponseEntity.ok(requestService.createRequest(personId, request));
+    public Request createRequest(@PathVariable long personId, @RequestBody Request request) throws Exception {
+        return requestService.createRequest(personId, request);
     }
 
     /**
