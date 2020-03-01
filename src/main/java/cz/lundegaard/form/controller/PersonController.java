@@ -49,7 +49,7 @@ public class PersonController {
      * @return response entity
      */
     @ResponseBody
-    @PostMapping(path = "/create")
+    @PostMapping
     public ResponseEntity createPerson(@RequestBody Person person) {
         return ResponseEntity.ok(personService.createPerson(person));
     }
@@ -63,7 +63,7 @@ public class PersonController {
      * @throws Exception thrown if person is not found
      */
     @ResponseBody
-    @PutMapping(path = "/update/{id}")
+    @PutMapping(path = "/{id}")
     public Person updatePerson(@PathVariable(value = "id") long id, @RequestBody Person person) throws Exception {
         return personService.updatePerson(id, person);
     }
@@ -75,7 +75,7 @@ public class PersonController {
      * @return response entity - success or not found
      */
     @ResponseBody
-    @DeleteMapping(path = "/delete/{id}")
+    @DeleteMapping(path = "/{id}")
     public ResponseEntity deletePerson(@PathVariable(value = "id") long id) {
         try {
             personService.deletePerson(id);

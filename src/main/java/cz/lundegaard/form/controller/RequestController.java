@@ -55,7 +55,7 @@ public class RequestController {
      * @throws Exception thrown if person is not found
      */
     @ResponseBody
-    @PostMapping(path = "/create")
+    @PostMapping
     public ResponseEntity createRequest(@PathVariable(value = "personId") long personId, @RequestBody Request request) throws Exception {
         return ResponseEntity.ok(requestService.createRequest(personId, request));
     }
@@ -70,7 +70,7 @@ public class RequestController {
      * @throws Exception thrown if person of request do not exist
      */
     @ResponseBody
-    @PutMapping(path = "/update/{requestId}")
+    @PutMapping(path = "/{requestId}")
     public Request updateRequest(@PathVariable(value = "personId") long personId, @PathVariable(value = "requestId") long requestId, @RequestBody Request request) throws Exception {
         return requestService.updateRequest(personId, requestId, request);
     }
@@ -83,7 +83,7 @@ public class RequestController {
      * @return response entity - success or not found
      */
     @ResponseBody
-    @DeleteMapping(path = "/delete/{requestId}")
+    @DeleteMapping(path = "/{requestId}")
     public ResponseEntity deleteRequest(@PathVariable(value = "personId") long personId, @PathVariable(value = "requestId") long requestId) {
         try {
             requestService.deleteRequest(personId, requestId);
