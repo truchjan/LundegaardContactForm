@@ -13,7 +13,7 @@ import java.util.List;
  * Spring controller maintains operations for people
  */
 @RestController
-@RequestMapping(path = "/person")
+@RequestMapping(path = "/api/v1/person")
 public class PersonController {
 
     @Autowired
@@ -38,7 +38,7 @@ public class PersonController {
      * @throws Exception thrown if person is not found
      */
     @GetMapping(path = "/{id}")
-    public Person getPersonById(@PathVariable(value = "id") long id) throws Exception {
+    public Person getPersonById(@PathVariable long id) throws Exception {
         return personService.getPersonById(id);
     }
 
@@ -49,7 +49,7 @@ public class PersonController {
      * @return response entity
      */
     @ResponseBody
-    @PostMapping(path = "/create")
+    @PostMapping
     public ResponseEntity createPerson(@RequestBody Person person) {
         return ResponseEntity.ok(personService.createPerson(person));
     }
@@ -63,8 +63,8 @@ public class PersonController {
      * @throws Exception thrown if person is not found
      */
     @ResponseBody
-    @PutMapping(path = "/update/{id}")
-    public Person updatePerson(@PathVariable(value = "id") long id, @RequestBody Person person) throws Exception {
+    @PutMapping(path = "/{id}")
+    public Person updatePerson(@PathVariable long id, @RequestBody Person person) throws Exception {
         return personService.updatePerson(id, person);
     }
 
@@ -75,8 +75,8 @@ public class PersonController {
      * @return response entity - success or not found
      */
     @ResponseBody
-    @DeleteMapping(path = "/delete/{id}")
-    public ResponseEntity deletePerson(@PathVariable(value = "id") long id) {
+    @DeleteMapping(path = "/{id}")
+    public ResponseEntity deletePerson(@PathVariable long id) {
         try {
             personService.deletePerson(id);
         } catch (Exception e) {

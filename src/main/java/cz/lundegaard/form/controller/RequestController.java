@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
  * Spring controller maintains operations for requests
  */
 @RestController
-@RequestMapping(path = "/person/{personId}/request")
+@RequestMapping(path = "/api/v1/person/{personId}/request")
 public class RequestController {
 
     @Autowired
@@ -28,7 +28,7 @@ public class RequestController {
      */
     @ResponseBody
     @GetMapping(path = "/all")
-    public List<Request> getAllRequests(@PathVariable(value = "personId") long personId) throws Exception {
+    public List<Request> getAllRequests(@PathVariable long personId) throws Exception {
         return requestService.getAllRequests(personId);
     }
 
@@ -42,7 +42,7 @@ public class RequestController {
      * @throws Exception thrown if person or request do not exist
      */
     @GetMapping(path = "/{requestId}")
-    public Request getRequestById(@PathVariable(value = "personId") long personId, @PathVariable(value = "requestId") long requestId) throws Exception {
+    public Request getRequestById(@PathVariable long personId, @PathVariable long requestId) throws Exception {
         return requestService.getRequestById(personId, requestId);
     }
 
@@ -55,8 +55,8 @@ public class RequestController {
      * @throws Exception thrown if person is not found
      */
     @ResponseBody
-    @PostMapping(path = "/create")
-    public ResponseEntity createRequest(@PathVariable(value = "personId") long personId, @RequestBody Request request) throws Exception {
+    @PostMapping
+    public ResponseEntity createRequest(@PathVariable long personId, @RequestBody Request request) throws Exception {
         return ResponseEntity.ok(requestService.createRequest(personId, request));
     }
 
@@ -70,8 +70,8 @@ public class RequestController {
      * @throws Exception thrown if person of request do not exist
      */
     @ResponseBody
-    @PutMapping(path = "/update/{requestId}")
-    public Request updateRequest(@PathVariable(value = "personId") long personId, @PathVariable(value = "requestId") long requestId, @RequestBody Request request) throws Exception {
+    @PutMapping(path = "/{requestId}")
+    public Request updateRequest(@PathVariable long personId, @PathVariable long requestId, @RequestBody Request request) throws Exception {
         return requestService.updateRequest(personId, requestId, request);
     }
 
@@ -83,8 +83,8 @@ public class RequestController {
      * @return response entity - success or not found
      */
     @ResponseBody
-    @DeleteMapping(path = "/delete/{requestId}")
-    public ResponseEntity deleteRequest(@PathVariable(value = "personId") long personId, @PathVariable(value = "requestId") long requestId) {
+    @DeleteMapping(path = "/{requestId}")
+    public ResponseEntity deleteRequest(@PathVariable long personId, @PathVariable long requestId) {
         try {
             requestService.deleteRequest(personId, requestId);
         } catch (Exception e) {
