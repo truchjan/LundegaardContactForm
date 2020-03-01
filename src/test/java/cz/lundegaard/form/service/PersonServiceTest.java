@@ -1,11 +1,13 @@
 package cz.lundegaard.form.service;
 
+import cz.lundegaard.form.dto.PersonDTO;
 import cz.lundegaard.form.entity.Person;
 import cz.lundegaard.form.repository.PersonRepository;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
@@ -21,6 +23,8 @@ public class PersonServiceTest {
     @Autowired
     private PersonRepository personRepository;
 
+    private ModelMapper modelMapper = new ModelMapper();
+
     @Before
     public void before() {
         personRepository.deleteAll();
@@ -28,7 +32,7 @@ public class PersonServiceTest {
         Person person = new Person();
         person.setName("Cristiano");
         person.setSurname("Ronaldo");
-        personService.createPerson(person);
+        personService.createPerson(modelMapper.map(person, PersonDTO.class));
     }
 
     @Test
@@ -41,13 +45,13 @@ public class PersonServiceTest {
     public void updatePersonText() throws Exception {
         Person person = personRepository.findByName("Cristiano").orElseThrow(() -> new Exception("Person not found"));
 
-        Person personNew = new Person();
+        PersonDTO personNew = new PersonDTO();
         personNew.setName("Zlatan");
         personNew.setSurname("Ibrahimovic");
 
         personService.updatePerson(person.getId(), personNew);
 
-        Person refreshPerson = personService.getPersonById(person.getId());
+        PersonDTO refreshPerson = personService.getPersonById(person.getId());
         Assert.assertEquals(refreshPerson.getName(), "Zlatan");
     }
 

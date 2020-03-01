@@ -1,6 +1,6 @@
 package cz.lundegaard.form.service;
 
-import cz.lundegaard.form.entity.Person;
+import cz.lundegaard.form.dto.PersonDTO;
 import cz.lundegaard.form.exception.ResourceNotFoundException;
 
 import javax.validation.Valid;
@@ -12,7 +12,7 @@ public interface PersonService {
      *
      * @return list of all people
      */
-    List<Person> getAllPeople();
+    List<PersonDTO> getAllPeople();
 
     /**
      * Finds person by his id
@@ -21,7 +21,7 @@ public interface PersonService {
      * @return found person
      * @throws ResourceNotFoundException thrown if the person does not exist
      */
-    Person getPersonById(long id) throws ResourceNotFoundException;
+    PersonDTO getPersonById(long id) throws ResourceNotFoundException;
 
     /**
      * Creates new person
@@ -29,7 +29,7 @@ public interface PersonService {
      * @param person new person
      * @return created person
      */
-    Person createPerson(@Valid Person person);
+    PersonDTO createPerson(@Valid PersonDTO person);
 
     /**
      * Finds person by his id and updates him with given information
@@ -39,7 +39,7 @@ public interface PersonService {
      * @return updated person
      * @throws ResourceNotFoundException thrown if person if not found
      */
-    Person updatePerson(long id, @Valid Person personNew) throws ResourceNotFoundException;
+    PersonDTO updatePerson(long id, @Valid PersonDTO personNew) throws ResourceNotFoundException;
 
     /**
      * Finds person by his id and deletes him from the repository

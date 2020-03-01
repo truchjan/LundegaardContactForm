@@ -42,7 +42,7 @@ public class RequestServiceTest {
         Person person = new Person();
         person.setName("Cristiano");
         person.setSurname("Ronaldo");
-        personService.createPerson(person);
+//        personService.createPerson(person);
 
         Request request = new Request();
         request.setRequestType(KindOfRequest.COMPLAINT);
