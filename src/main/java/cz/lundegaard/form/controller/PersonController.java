@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -52,7 +53,7 @@ public class PersonController {
     @ResponseBody
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public Person createPerson(@RequestBody Person person) {
+    public Person createPerson(@Valid @RequestBody Person person) {
         return personService.createPerson(person);
     }
 
@@ -66,7 +67,7 @@ public class PersonController {
      */
     @ResponseBody
     @PutMapping(path = "/{id}")
-    public Person updatePerson(@PathVariable long id, @RequestBody Person person) throws ResourceNotFoundException {
+    public Person updatePerson(@PathVariable long id, @Valid @RequestBody Person person) throws ResourceNotFoundException {
         return personService.updatePerson(id, person);
     }
 

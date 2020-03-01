@@ -8,6 +8,7 @@ import cz.lundegaard.form.repository.RequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Service
@@ -53,7 +54,7 @@ public class RequestService {
      * @return response entity
      * @throws ResourceNotFoundException thrown if person is not found
      */
-    public Request createRequest(long personId, Request request) throws ResourceNotFoundException {
+    public Request createRequest(long personId, @Valid Request request) throws ResourceNotFoundException {
         Person person = personRepository.findById(personId).orElseThrow(() -> new ResourceNotFoundException("Person " + personId + " not found"));
         request.setPerson(person);
         person.getRequests().add(request);
@@ -69,7 +70,7 @@ public class RequestService {
      * @return updated request
      * @throws Exception thrown if person of request do not exist
      */
-    public Request updateRequest(long personId, long requestId, Request requestNew) throws ResourceNotFoundException {
+    public Request updateRequest(long personId, long requestId, @Valid Request requestNew) throws ResourceNotFoundException {
         Person person = personRepository.findById(personId).orElseThrow(() -> new ResourceNotFoundException("Person " + personId + " not found"));
         Request request = requestRepository.findByIdAndPersonId(requestId, personId)
                 .orElseThrow(() -> new ResourceNotFoundException("Request " + requestId + " belonging to person " + personId + " not found"));
