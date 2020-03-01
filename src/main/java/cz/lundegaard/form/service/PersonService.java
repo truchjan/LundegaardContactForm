@@ -1,6 +1,7 @@
 package cz.lundegaard.form.service;
 
 import cz.lundegaard.form.entity.Person;
+import cz.lundegaard.form.exception.ResourceNotFoundException;
 import cz.lundegaard.form.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,11 +28,11 @@ public class PersonService {
      *
      * @param id person to be found
      * @return found person
-     * @throws Exception thrown if the person does not exist
+     * @throws ResourceNotFoundException thrown if the person does not exist
      */
-    public Person getPersonById(long id) throws Exception {
+    public Person getPersonById(long id) throws ResourceNotFoundException {
         return personRepository.findById(id)
-                .orElseThrow(() -> new Exception("Person " + id + " not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Person " + id + " not found"));
     }
 
     /**
@@ -50,11 +51,11 @@ public class PersonService {
      * @param id        person to be updated
      * @param personNew new person
      * @return updated person
-     * @throws Exception thrown if person if not found
+     * @throws ResourceNotFoundException thrown if person if not found
      */
-    public Person updatePerson(long id, Person personNew) throws Exception {
+    public Person updatePerson(long id, Person personNew) throws ResourceNotFoundException {
         Person person = personRepository.findById(id)
-                .orElseThrow(() -> new Exception("Person " + id + " not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Person " + id + " not found"));
 
         person.setName(personNew.getName());
         person.setSurname(personNew.getSurname());
@@ -67,11 +68,11 @@ public class PersonService {
      * Finds person by his id and deletes him from the repository
      *
      * @param id person to be deleted
-     * @throws Exception thrown if person is not found
+     * @throws ResourceNotFoundException thrown if person is not found
      */
-    public void deletePerson(long id) throws Exception {
+    public void deletePerson(long id) throws ResourceNotFoundException {
         Person person = personRepository.findById(id)
-                .orElseThrow(() -> new Exception("Person " + id + " not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Person " + id + " not found"));
 
         personRepository.delete(person);
     }

@@ -1,6 +1,7 @@
 package cz.lundegaard.form.controller;
 
 import cz.lundegaard.form.entity.Person;
+import cz.lundegaard.form.exception.ResourceNotFoundException;
 import cz.lundegaard.form.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,10 +36,10 @@ public class PersonController {
      *
      * @param id person to be found
      * @return given person
-     * @throws Exception thrown if person is not found
+     * @throws ResourceNotFoundException thrown if person is not found
      */
     @GetMapping(path = "/{id}")
-    public Person getPersonById(@PathVariable long id) throws Exception {
+    public Person getPersonById(@PathVariable long id) throws ResourceNotFoundException {
         return personService.getPersonById(id);
     }
 
@@ -61,11 +62,11 @@ public class PersonController {
      * @param id     person to be updated
      * @param person changes to the person
      * @return updated person
-     * @throws Exception thrown if person is not found
+     * @throws ResourceNotFoundException thrown if person is not found
      */
     @ResponseBody
     @PutMapping(path = "/{id}")
-    public Person updatePerson(@PathVariable long id, @RequestBody Person person) throws Exception {
+    public Person updatePerson(@PathVariable long id, @RequestBody Person person) throws ResourceNotFoundException {
         return personService.updatePerson(id, person);
     }
 
@@ -80,7 +81,7 @@ public class PersonController {
     public ResponseEntity deletePerson(@PathVariable long id) {
         try {
             personService.deletePerson(id);
-        } catch (Exception e) {
+        } catch (ResourceNotFoundException e) {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(HttpStatus.OK);
