@@ -4,6 +4,10 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -13,11 +17,14 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.Objects;
 
 /**
  * Db model for request entity
  */
+@Getter
+@Setter
+@NoArgsConstructor
+@EqualsAndHashCode
 @Entity
 @Table(name = "request")
 public class Request {
@@ -50,61 +57,4 @@ public class Request {
     @JsonIdentityReference(alwaysAsId = true)
     @JsonProperty("person_id")
     private Person person;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public KindOfRequest getRequestType() {
-        return requestType;
-    }
-
-    public void setRequestType(KindOfRequest requestType) {
-        this.requestType = requestType;
-    }
-
-    public long getPolicyNumber() {
-        return policyNumber;
-    }
-
-    public void setPolicyNumber(long policyNumber) {
-        this.policyNumber = policyNumber;
-    }
-
-    public String getRequestText() {
-        return requestText;
-    }
-
-    public void setRequestText(String requestText) {
-        this.requestText = requestText;
-    }
-
-    public Person getPerson() {
-        return person;
-    }
-
-    public void setPerson(Person person) {
-        this.person = person;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Request request = (Request) o;
-        return id == request.id &&
-                policyNumber == request.policyNumber &&
-                requestType == request.requestType &&
-                Objects.equals(requestText, request.requestText) &&
-                Objects.equals(person, request.person);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, requestType, policyNumber, requestText, person);
-    }
 }
