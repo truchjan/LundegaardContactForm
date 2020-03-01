@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 /**
  * Spring controller maintains operations for requests
  */
@@ -58,7 +60,7 @@ public class RequestController {
     @ResponseBody
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public Request createRequest(@PathVariable long personId, @RequestBody Request request) throws ResourceNotFoundException {
+    public Request createRequest(@PathVariable long personId, @Valid @RequestBody Request request) throws ResourceNotFoundException {
         return requestService.createRequest(personId, request);
     }
 
@@ -73,7 +75,7 @@ public class RequestController {
      */
     @ResponseBody
     @PutMapping(path = "/{requestId}")
-    public Request updateRequest(@PathVariable long personId, @PathVariable long requestId, @RequestBody Request request) throws ResourceNotFoundException {
+    public Request updateRequest(@PathVariable long personId, @PathVariable long requestId, @Valid @RequestBody Request request) throws ResourceNotFoundException {
         return requestService.updateRequest(personId, requestId, request);
     }
 

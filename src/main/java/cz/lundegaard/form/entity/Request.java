@@ -8,6 +8,11 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 
 /**
@@ -22,15 +27,22 @@ public class Request {
     @Column(name = "request_id", nullable = false)
     private long id;
 
+    @NotNull
     @Column(name = "request_type", nullable = false)
     private KindOfRequest requestType;
 
+    @NotNull
+    @Min(0)
+    @Max(999999)
     @Column(name = "policy_number", nullable = false)
     private long policyNumber;
 
+    @NotNull
+    @Size(max = 5000)
     @Column(name = "request_text", nullable = false)
     private String requestText;
 
+    @Valid
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "person_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)

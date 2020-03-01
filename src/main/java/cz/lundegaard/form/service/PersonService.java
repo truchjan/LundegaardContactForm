@@ -6,6 +6,7 @@ import cz.lundegaard.form.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Service
@@ -41,7 +42,7 @@ public class PersonService {
      * @param person new person
      * @return created person
      */
-    public Person createPerson(Person person) {
+    public Person createPerson(@Valid Person person) {
         return personRepository.save(person);
     }
 
@@ -53,7 +54,7 @@ public class PersonService {
      * @return updated person
      * @throws ResourceNotFoundException thrown if person if not found
      */
-    public Person updatePerson(long id, Person personNew) throws ResourceNotFoundException {
+    public Person updatePerson(long id, @Valid Person personNew) throws ResourceNotFoundException {
         Person person = personRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Person " + id + " not found"));
 

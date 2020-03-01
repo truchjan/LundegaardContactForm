@@ -1,6 +1,9 @@
 package cz.lundegaard.form.entity;
 
 import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.*;
 
 /**
@@ -15,14 +18,18 @@ public class Person {
     @Column(name = "person_id", nullable = false)
     private long id;
 
+    @NotNull
+    @Size(max = 99)
     @Column(name = "name", nullable = false)
     private String name;
 
+    @NotNull
+    @Size(max = 99)
     @Column(name = "surname", nullable = false)
     private String surname;
 
     @OneToMany(mappedBy = "person")
-    private List<Request> requests = new ArrayList<>();
+    private List<@Valid Request> requests = new ArrayList<>();
 
     public long getId() {
         return id;
