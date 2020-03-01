@@ -38,7 +38,7 @@ public class PersonController {
      * @throws Exception thrown if person is not found
      */
     @GetMapping(path = "/{id}")
-    public Person getPersonById(@PathVariable(value = "id") long id) throws Exception {
+    public Person getPersonById(@PathVariable long id) throws Exception {
         return personService.getPersonById(id);
     }
 
@@ -64,7 +64,7 @@ public class PersonController {
      */
     @ResponseBody
     @PutMapping(path = "/{id}")
-    public Person updatePerson(@PathVariable(value = "id") long id, @RequestBody Person person) throws Exception {
+    public Person updatePerson(@PathVariable long id, @RequestBody Person person) throws Exception {
         return personService.updatePerson(id, person);
     }
 
@@ -76,7 +76,7 @@ public class PersonController {
      */
     @ResponseBody
     @DeleteMapping(path = "/{id}")
-    public ResponseEntity deletePerson(@PathVariable(value = "id") long id) {
+    public ResponseEntity deletePerson(@PathVariable long id) {
         try {
             personService.deletePerson(id);
         } catch (Exception e) {

@@ -28,7 +28,7 @@ public class RequestController {
      */
     @ResponseBody
     @GetMapping(path = "/all")
-    public List<Request> getAllRequests(@PathVariable(value = "personId") long personId) throws Exception {
+    public List<Request> getAllRequests(@PathVariable long personId) throws Exception {
         return requestService.getAllRequests(personId);
     }
 
@@ -42,7 +42,7 @@ public class RequestController {
      * @throws Exception thrown if person or request do not exist
      */
     @GetMapping(path = "/{requestId}")
-    public Request getRequestById(@PathVariable(value = "personId") long personId, @PathVariable(value = "requestId") long requestId) throws Exception {
+    public Request getRequestById(@PathVariable long personId, @PathVariable long requestId) throws Exception {
         return requestService.getRequestById(personId, requestId);
     }
 
@@ -56,7 +56,7 @@ public class RequestController {
      */
     @ResponseBody
     @PostMapping
-    public ResponseEntity createRequest(@PathVariable(value = "personId") long personId, @RequestBody Request request) throws Exception {
+    public ResponseEntity createRequest(@PathVariable long personId, @RequestBody Request request) throws Exception {
         return ResponseEntity.ok(requestService.createRequest(personId, request));
     }
 
@@ -71,7 +71,7 @@ public class RequestController {
      */
     @ResponseBody
     @PutMapping(path = "/{requestId}")
-    public Request updateRequest(@PathVariable(value = "personId") long personId, @PathVariable(value = "requestId") long requestId, @RequestBody Request request) throws Exception {
+    public Request updateRequest(@PathVariable long personId, @PathVariable long requestId, @RequestBody Request request) throws Exception {
         return requestService.updateRequest(personId, requestId, request);
     }
 
@@ -84,7 +84,7 @@ public class RequestController {
      */
     @ResponseBody
     @DeleteMapping(path = "/{requestId}")
-    public ResponseEntity deleteRequest(@PathVariable(value = "personId") long personId, @PathVariable(value = "requestId") long requestId) {
+    public ResponseEntity deleteRequest(@PathVariable long personId, @PathVariable long requestId) {
         try {
             requestService.deleteRequest(personId, requestId);
         } catch (Exception e) {
