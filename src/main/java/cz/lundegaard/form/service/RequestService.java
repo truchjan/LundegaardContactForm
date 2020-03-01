@@ -2,6 +2,7 @@ package cz.lundegaard.form.service;
 
 import cz.lundegaard.form.entity.Person;
 import cz.lundegaard.form.entity.Request;
+import cz.lundegaard.form.exception.ResourceNotFoundException;
 import cz.lundegaard.form.repository.PersonRepository;
 import cz.lundegaard.form.repository.RequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,11 +24,11 @@ public class RequestService {
      *
      * @param personId person owning given requests
      * @return list of all requests of given person
-     * @throws Exception thrown if person does not exist
+     * @throws ResourceNotFoundException thrown if person does not exist
      */
-    public List<Request> getAllRequests(long personId) throws Exception {
+    public List<Request> getAllRequests(long personId) throws ResourceNotFoundException {
         if (!personRepository.existsById(personId))
-            throw new Exception("Person " + personId + " not found");
+            throw new ResourceNotFoundException("Person " + personId + " not found");
         return requestRepository.findAllByPersonId(personId);
     }
 
@@ -37,11 +38,11 @@ public class RequestService {
      * @param personId  person owning the request
      * @param requestId request to be found
      * @return one request of given id
-     * @throws Exception thrown if person or request do not exist
+     * @throws ResourceNotFoundException thrown if person or request do not exist
      */
-    public Request getRequestById(long personId, long requestId) throws Exception {
+    public Request getRequestById(long personId, long requestId) throws ResourceNotFoundException {
         return requestRepository.findByIdAndPersonId(requestId, personId)
-                .orElseThrow(() -> new Exception("Request " + requestId + " belonging to person " + personId + " not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Request " + requestId + " belonging to person " + personId + " not found"));
     }
 
     /**
@@ -50,10 +51,10 @@ public class RequestService {
      * @param personId person who will own the new request
      * @param request  request to be created
      * @return response entity
-     * @throws Exception thrown if person is not found
+     * @throws ResourceNotFoundException thrown if person is not found
      */
-    public Request createRequest(long personId, Request request) throws Exception {
-        Person person = personRepository.findById(personId).orElseThrow(() -> new Exception("Person " + personId + " not found"));
+    public Request createRequest(long personId, Request request) throws ResourceNotFoundException {
+        Person person = personRepository.findById(personId).orElseThrow(() -> new ResourceNotFoundException("Person " + personId + " not found"));
         request.setPerson(person);
         person.getRequests().add(request);
         return requestRepository.save(request);
@@ -68,10 +69,10 @@ public class RequestService {
      * @return updated request
      * @throws Exception thrown if person of request do not exist
      */
-    public Request updateRequest(long personId, long requestId, Request requestNew) throws Exception {
-        Person person = personRepository.findById(personId).orElseThrow(() -> new Exception("Person " + personId + " not found"));
+    public Request updateRequest(long personId, long requestId, Request requestNew) throws ResourceNotFoundException {
+        Person person = personRepository.findById(personId).orElseThrow(() -> new ResourceNotFoundException("Person " + personId + " not found"));
         Request request = requestRepository.findByIdAndPersonId(requestId, personId)
-                .orElseThrow(() -> new Exception("Request " + requestId + " belonging to person " + personId + " not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Request " + requestId + " belonging to person " + personId + " not found"));
 
         request.setRequestType(requestNew.getRequestType());
         request.setPolicyNumber(requestNew.getPolicyNumber());
@@ -87,9 +88,9 @@ public class RequestService {
      * @param personId  person owning the request
      * @param requestId request to be deleted
      */
-    public void deleteRequest(long personId, long requestId) throws Exception {
+    public void deleteRequest(long personId, long requestId) throws ResourceNotFoundException {
         Request request = requestRepository.findByIdAndPersonId(requestId, personId)
-                .orElseThrow(() -> new Exception("Request " + requestId + " belonging to person " + personId + " not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Request " + requestId + " belonging to person " + personId + " not found"));
 
         requestRepository.delete(request);
     }

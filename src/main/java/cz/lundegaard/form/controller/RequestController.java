@@ -3,6 +3,7 @@ package cz.lundegaard.form.controller;
 import java.util.List;
 
 import cz.lundegaard.form.entity.Request;
+import cz.lundegaard.form.exception.ResourceNotFoundException;
 import cz.lundegaard.form.service.RequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,11 +25,11 @@ public class RequestController {
      *
      * @param personId person owning given requests
      * @return list of all requests of given person
-     * @throws Exception thrown if person does not exist
+     * @throws ResourceNotFoundException thrown if person does not exist
      */
     @ResponseBody
     @GetMapping(path = "/all")
-    public List<Request> getAllRequests(@PathVariable long personId) throws Exception {
+    public List<Request> getAllRequests(@PathVariable long personId) throws ResourceNotFoundException {
         return requestService.getAllRequests(personId);
     }
 
@@ -39,10 +40,10 @@ public class RequestController {
      * @param personId  person owning the request
      * @param requestId request to be found
      * @return one request of given id
-     * @throws Exception thrown if person or request do not exist
+     * @throws ResourceNotFoundException thrown if person or request do not exist
      */
     @GetMapping(path = "/{requestId}")
-    public Request getRequestById(@PathVariable long personId, @PathVariable long requestId) throws Exception {
+    public Request getRequestById(@PathVariable long personId, @PathVariable long requestId) throws ResourceNotFoundException {
         return requestService.getRequestById(personId, requestId);
     }
 
@@ -52,12 +53,12 @@ public class RequestController {
      * @param personId person who will own the new request
      * @param request  request to be created
      * @return response entity
-     * @throws Exception thrown if person is not found
+     * @throws ResourceNotFoundException thrown if person is not found
      */
     @ResponseBody
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public Request createRequest(@PathVariable long personId, @RequestBody Request request) throws Exception {
+    public Request createRequest(@PathVariable long personId, @RequestBody Request request) throws ResourceNotFoundException {
         return requestService.createRequest(personId, request);
     }
 
@@ -68,11 +69,11 @@ public class RequestController {
      * @param requestId request to be updated
      * @param request   changes to the request
      * @return updated request
-     * @throws Exception thrown if person of request do not exist
+     * @throws ResourceNotFoundException thrown if person of request do not exist
      */
     @ResponseBody
     @PutMapping(path = "/{requestId}")
-    public Request updateRequest(@PathVariable long personId, @PathVariable long requestId, @RequestBody Request request) throws Exception {
+    public Request updateRequest(@PathVariable long personId, @PathVariable long requestId, @RequestBody Request request) throws ResourceNotFoundException {
         return requestService.updateRequest(personId, requestId, request);
     }
 
@@ -88,7 +89,7 @@ public class RequestController {
     public ResponseEntity deleteRequest(@PathVariable long personId, @PathVariable long requestId) {
         try {
             requestService.deleteRequest(personId, requestId);
-        } catch (Exception e) {
+        } catch (ResourceNotFoundException e) {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(HttpStatus.OK);
