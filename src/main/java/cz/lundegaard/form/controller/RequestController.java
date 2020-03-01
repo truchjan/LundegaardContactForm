@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
  * Spring controller maintains operations for requests
  */
 @RestController
-@RequestMapping(path = "/person/{personId}/request")
+@RequestMapping(path = "/api/v1/person/{personId}/request")
 public class RequestController {
 
     @Autowired

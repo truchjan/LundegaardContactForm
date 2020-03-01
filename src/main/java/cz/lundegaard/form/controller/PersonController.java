@@ -13,7 +13,7 @@ import java.util.List;
  * Spring controller maintains operations for people
  */
 @RestController
-@RequestMapping(path = "/person")
+@RequestMapping(path = "/api/v1/person")
 public class PersonController {
 
     @Autowired
