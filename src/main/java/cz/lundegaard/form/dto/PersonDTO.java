@@ -1,6 +1,5 @@
 package cz.lundegaard.form.dto;
 
-import cz.lundegaard.form.entity.Request;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

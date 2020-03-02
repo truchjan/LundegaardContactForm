@@ -2,6 +2,7 @@ package cz.lundegaard.form.service;
 
 import cz.lundegaard.form.dto.PersonDTO;
 import cz.lundegaard.form.entity.Person;
+import cz.lundegaard.form.exception.ResourceNotFoundException;
 import cz.lundegaard.form.repository.PersonRepository;
 import org.junit.Assert;
 import org.junit.Before;
@@ -36,28 +37,28 @@ public class PersonServiceTest {
     }
 
     @Test
-    public void createPersonTest() throws Exception {
-        Person person = personRepository.findByName("Cristiano").orElseThrow(() -> new Exception("Person not found"));
+    public void createPersonTest() throws ResourceNotFoundException {
+        Person person = personRepository.findByName("Cristiano").orElseThrow(() -> new ResourceNotFoundException("Person not found"));
         Assert.assertNotNull(person);
     }
 
     @Test
-    public void updatePersonText() throws Exception {
-        Person person = personRepository.findByName("Cristiano").orElseThrow(() -> new Exception("Person not found"));
+    public void updatePersonText() throws ResourceNotFoundException {
+        Person person = personRepository.findByName("Cristiano").orElseThrow(() -> new ResourceNotFoundException("Person not found"));
 
-        PersonDTO personNew = new PersonDTO();
+        Person personNew = new Person();
         personNew.setName("Zlatan");
         personNew.setSurname("Ibrahimovic");
 
-        personService.updatePerson(person.getId(), personNew);
+        personService.updatePerson(person.getId(), modelMapper.map(personNew, PersonDTO.class));
 
         PersonDTO refreshPerson = personService.getPersonById(person.getId());
         Assert.assertEquals(refreshPerson.getName(), "Zlatan");
     }
 
-    @Test(expected = Exception.class)
-    public void deletePersonTest() throws Exception {
-        Person person = personRepository.findByName("Cristiano").orElseThrow(() -> new Exception("Person not found"));
+    @Test(expected = ResourceNotFoundException.class)
+    public void deletePersonTest() throws ResourceNotFoundException {
+        Person person = personRepository.findByName("Cristiano").orElseThrow(() -> new ResourceNotFoundException("Person not found"));
         personService.deletePerson(person.getId());
         personService.getPersonById(person.getId());
     }
