@@ -15,20 +15,20 @@
 
 #### Endpointy (příklady)
 
-- POST localhost:8080/person/create
+- POST localhost:8080/api/v1/person
     - Content-Type application/json
     - body: {"name":"Karel","surname":"Novák"}
-- POST localhost:8080/person/{id Karla Nováka}/request/create
+- POST localhost:8080/api/v1/person/{id Karla Nováka}/request
     - Content-Type application/json
     - body: {"requestType":"1","policyNumber":"152","requestText":"text"}
-- GET localhost:8080/person/all
-- GET localhost:8080/person/{id Karla Nováka}/request/all
-- PUT localhost:8080/person/{id Karla Nováka}/request/update/{id requestu}
+- GET localhost:8080/api/v1/person/all
+- GET localhost:8080/api/v1/person/{id Karla Nováka}/request/all
+- PUT localhost:8080/api/v1/person/{id Karla Nováka}/request/{id requestu}
     - Content-Type application/json
     - body: {"requestType":"1","policyNumber":"152","requestText":"jiny text"}
-- GET localhost:8080/person/{id Karla Nováka}/request/all
-- DELETE localhost:8080/person/{id Karla Nováka}/request/delete/{id requestu}
-- GET localhost:8080/person/{id Karla Nováka}/request/all
+- GET localhost:8080/api/v1/person/{id Karla Nováka}/request/all
+- DELETE localhost:8080/api/v1/person/{id Karla Nováka}/request/{id requestu}
+- GET localhost:8080/api/v1/person/{id Karla Nováka}/request/all
 
 #### Co jsem nestihl za daný limit 1MD:
 
@@ -41,3 +41,14 @@
 - pořádně zalogovat jednotlivé události
 - rád bych si více pohrál s ResponseEntity návratovou hodnotou pro jednotlivé CRUD operace
 - cokoliv z těchto(nebo jiných) co by byla fatální chyba ovlivňující moje přijetí rád doplním
+
+#### UPDATE: Po zpracování doporučení
+- updatováno api - viz  výše upravené příklady endpointů
+- povedlo se mi zpracovat téměř všechna doporučení(krom jednoho)
+- pro jednotlivá doporučení(popřípadě jejich skupiny) jsem vytvořil issues na githubu
+- na každý issue je nalinkovaný pull request, který dané doporučení řeší
+- stačí tedy github->issues->closed->{vybrat issue}->linked pull request->Files changed a uvidíte všechny změny,
+ které jsem udělal ve spojení s daným doporučením
+- u některých issues jsem okomentoval i svůj postup/pocity(#4, #5, #9)
+- jedno doporučení se mi bohužel nezadařilo a to nasazení flyway - viz komentář u issue
+- znovu platí, že cokoliv rád opravím nebo doplním
