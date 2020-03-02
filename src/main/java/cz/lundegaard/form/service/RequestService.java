@@ -1,6 +1,6 @@
 package cz.lundegaard.form.service;
 
-import cz.lundegaard.form.entity.Request;
+import cz.lundegaard.form.dto.RequestDTO;
 import cz.lundegaard.form.exception.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +17,7 @@ public interface RequestService {
      * @return list of all requests of given person
      * @throws ResourceNotFoundException thrown if person does not exist
      */
-    List<Request> getAllRequests(long personId) throws ResourceNotFoundException;
+    List<RequestDTO> getAllRequests(long personId) throws ResourceNotFoundException;
 
     /**
      * Finds request with given id owned by person with given id
@@ -27,7 +27,7 @@ public interface RequestService {
      * @return one request of given id
      * @throws ResourceNotFoundException thrown if person or request do not exist
      */
-    Request getRequestById(long personId, long requestId) throws ResourceNotFoundException;
+    RequestDTO getRequestById(long personId, long requestId) throws ResourceNotFoundException;
 
     /**
      * Creates a request with given information and connects it to given person
@@ -37,7 +37,7 @@ public interface RequestService {
      * @return response entity
      * @throws ResourceNotFoundException thrown if person is not found
      */
-    Request createRequest(long personId, @Valid Request request) throws ResourceNotFoundException;
+    RequestDTO createRequest(long personId, @Valid RequestDTO request) throws ResourceNotFoundException;
 
     /**
      * Finds given person and request, updates the request and connects it to the person
@@ -48,7 +48,7 @@ public interface RequestService {
      * @return updated request
      * @throws ResourceNotFoundException thrown if person of request do not exist
      */
-    Request updateRequest(long personId, long requestId, @Valid Request requestNew) throws ResourceNotFoundException;
+    RequestDTO updateRequest(long personId, long requestId, @Valid RequestDTO requestNew) throws ResourceNotFoundException;
 
     /**
      * Finds given request by person and deletes the request

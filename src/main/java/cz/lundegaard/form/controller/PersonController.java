@@ -1,6 +1,6 @@
 package cz.lundegaard.form.controller;
 
-import cz.lundegaard.form.entity.Person;
+import cz.lundegaard.form.dto.PersonDTO;
 import cz.lundegaard.form.exception.ResourceNotFoundException;
 import cz.lundegaard.form.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,7 @@ public class PersonController {
      */
     @ResponseBody
     @GetMapping(path = "/all")
-    public List<Person> getAllPeople() {
+    public List<PersonDTO> getAllPeople() {
         return personService.getAllPeople();
     }
 
@@ -40,7 +40,7 @@ public class PersonController {
      * @throws ResourceNotFoundException thrown if person is not found
      */
     @GetMapping(path = "/{id}")
-    public Person getPersonById(@PathVariable long id) throws ResourceNotFoundException {
+    public PersonDTO getPersonById(@PathVariable long id) throws ResourceNotFoundException {
         return personService.getPersonById(id);
     }
 
@@ -53,7 +53,7 @@ public class PersonController {
     @ResponseBody
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public Person createPerson(@Valid @RequestBody Person person) {
+    public PersonDTO createPerson(@Valid @RequestBody PersonDTO person) {
         return personService.createPerson(person);
     }
 
@@ -67,7 +67,7 @@ public class PersonController {
      */
     @ResponseBody
     @PutMapping(path = "/{id}")
-    public Person updatePerson(@PathVariable long id, @Valid @RequestBody Person person) throws ResourceNotFoundException {
+    public PersonDTO updatePerson(@PathVariable long id, @Valid @RequestBody PersonDTO person) throws ResourceNotFoundException {
         return personService.updatePerson(id, person);
     }
 

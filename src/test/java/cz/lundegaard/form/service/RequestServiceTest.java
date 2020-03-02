@@ -1,15 +1,18 @@
 package cz.lundegaard.form.service;
 
+import cz.lundegaard.form.dto.PersonDTO;
+import cz.lundegaard.form.dto.RequestDTO;
 import cz.lundegaard.form.entity.KindOfRequest;
 import cz.lundegaard.form.entity.Person;
 import cz.lundegaard.form.entity.Request;
+import cz.lundegaard.form.exception.ResourceNotFoundException;
 import cz.lundegaard.form.repository.PersonRepository;
 import cz.lundegaard.form.repository.RequestRepository;
-import org.hibernate.Hibernate;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
@@ -34,33 +37,36 @@ public class RequestServiceTest {
     @Autowired
     private PersonRepository personRepository;
 
+    private ModelMapper modelMapper = new ModelMapper();
+
     @Before
-    public void before() throws Exception {
+    public void before() throws ResourceNotFoundException {
         personRepository.deleteAll();
         requestRepository.deleteAll();
 
         Person person = new Person();
         person.setName("Cristiano");
         person.setSurname("Ronaldo");
-        personService.createPerson(person);
+        personService.createPerson(modelMapper.map(person, PersonDTO.class));
 
         Request request = new Request();
         request.setRequestType(KindOfRequest.COMPLAINT);
         request.setPolicyNumber(123);
         request.setRequestText("Text");
         request.setPerson(person);
-        requestService.createRequest(person.getId(), request);
+        long personId = personRepository.findByName(person.getName()).orElseThrow(() -> new ResourceNotFoundException("Person not found")).getId();;
+        requestService.createRequest(personId, modelMapper.map(request, RequestDTO.class));
     }
 
     @Test
-    public void createRequestTest() throws Exception {
-        Request request = requestRepository.findByRequestText("Text").orElseThrow(() -> new Exception("Request not found"));
+    public void createRequestTest() throws ResourceNotFoundException {
+        Request request = requestRepository.findByRequestText("Text").orElseThrow(() -> new ResourceNotFoundException("Request not found"));
         Assert.assertNotNull(request);
     }
 
     @Test
-    public void updateRequestText() throws Exception {
-        Request request = requestRepository.findByRequestText("Text").orElseThrow(() -> new Exception("Request not found"));
+    public void updateRequestText() throws ResourceNotFoundException {
+        Request request = requestRepository.findByRequestText("Text").orElseThrow(() -> new ResourceNotFoundException("Request not found"));
 
         Request requestNew = new Request();
         requestNew.setRequestType(KindOfRequest.CONTRACT_ADJUSTMENT);
@@ -68,15 +74,15 @@ public class RequestServiceTest {
         requestNew.setRequestText("Novytext");
         requestNew.setPerson(request.getPerson());
 
-        requestService.updateRequest(request.getPerson().getId(), request.getId(), requestNew);
+        requestService.updateRequest(request.getPerson().getId(), request.getId(), modelMapper.map(requestNew, RequestDTO.class));
 
-        Request refreshRequest = requestService.getRequestById(request.getPerson().getId(), request.getId());
+        RequestDTO refreshRequest = requestService.getRequestById(request.getPerson().getId(), request.getId());
         Assert.assertEquals(refreshRequest.getRequestText(), "Novytext");
     }
 
-    @Test(expected = Exception.class)
-    public void deleteRequestTest() throws Exception {
-        Request request = requestRepository.findByRequestText("Text").orElseThrow(() -> new Exception("Request not found"));
+    @Test(expected = ResourceNotFoundException.class)
+    public void deleteRequestTest() throws ResourceNotFoundException {
+        Request request = requestRepository.findByRequestText("Text").orElseThrow(() -> new ResourceNotFoundException("Request not found"));
 
         requestService.deleteRequest(request.getPerson().getId(), request.getId());
         requestService.getRequestById(request.getPerson().getId(), request.getId());

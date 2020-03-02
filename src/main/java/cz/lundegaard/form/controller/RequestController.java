@@ -2,7 +2,7 @@ package cz.lundegaard.form.controller;
 
 import java.util.List;
 
-import cz.lundegaard.form.entity.Request;
+import cz.lundegaard.form.dto.RequestDTO;
 import cz.lundegaard.form.exception.ResourceNotFoundException;
 import cz.lundegaard.form.service.RequestService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +31,7 @@ public class RequestController {
      */
     @ResponseBody
     @GetMapping(path = "/all")
-    public List<Request> getAllRequests(@PathVariable long personId) throws ResourceNotFoundException {
+    public List<RequestDTO> getAllRequests(@PathVariable long personId) throws ResourceNotFoundException {
         return requestService.getAllRequests(personId);
     }
 
@@ -45,7 +45,7 @@ public class RequestController {
      * @throws ResourceNotFoundException thrown if person or request do not exist
      */
     @GetMapping(path = "/{requestId}")
-    public Request getRequestById(@PathVariable long personId, @PathVariable long requestId) throws ResourceNotFoundException {
+    public RequestDTO getRequestById(@PathVariable long personId, @PathVariable long requestId) throws ResourceNotFoundException {
         return requestService.getRequestById(personId, requestId);
     }
 
@@ -60,7 +60,7 @@ public class RequestController {
     @ResponseBody
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public Request createRequest(@PathVariable long personId, @Valid @RequestBody Request request) throws ResourceNotFoundException {
+    public RequestDTO createRequest(@PathVariable long personId, @Valid @RequestBody RequestDTO request) throws ResourceNotFoundException {
         return requestService.createRequest(personId, request);
     }
 
@@ -75,7 +75,7 @@ public class RequestController {
      */
     @ResponseBody
     @PutMapping(path = "/{requestId}")
-    public Request updateRequest(@PathVariable long personId, @PathVariable long requestId, @Valid @RequestBody Request request) throws ResourceNotFoundException {
+    public RequestDTO updateRequest(@PathVariable long personId, @PathVariable long requestId, @Valid @RequestBody RequestDTO request) throws ResourceNotFoundException {
         return requestService.updateRequest(personId, requestId, request);
     }
 
