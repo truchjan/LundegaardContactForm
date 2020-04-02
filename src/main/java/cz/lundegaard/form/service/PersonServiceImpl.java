@@ -66,4 +66,11 @@ public class PersonServiceImpl implements PersonService {
 
         personRepository.delete(person);
     }
+
+    @Override
+    public PersonDTO findPersonByNameAndSurname(String name, String surname) throws ResourceNotFoundException{
+        Person person = personRepository.findByNameAndSurname(name, surname)
+                .orElseThrow(() -> new ResourceNotFoundException("Person " + name + " " + surname + " not found"));
+        return modelMapper.map(person, PersonDTO.class);
+    }
 }

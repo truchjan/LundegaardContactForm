@@ -48,4 +48,14 @@ public interface PersonService {
      * @throws ResourceNotFoundException thrown if person is not found
      */
     void deletePerson(long id) throws ResourceNotFoundException;
+
+    /**
+     * Finds person by his name and surname
+     *
+     * @param name person's name
+     * @param surname person's surname
+     * @return found person
+     * @throws ResourceNotFoundException thrown if person does not exist
+     */
+    PersonDTO findPersonByNameAndSurname(String name, String surname) throws ResourceNotFoundException;
 }
