@@ -3,14 +3,14 @@
         <div v-if="!submitted">
             <div class="form-group">
                 <label for="requestType">Kind of Request</label>
-                <input
-                        type="text"
-                        class="form-control"
-                        id="requestType"
-                        required
-                        v-model="request.requestType"
-                        name="requestType"
-                />
+                <p>
+                <select v-model="request.requestType" id="requestType">
+                    <option disabled value="">Please select one</option>
+                    <option value="0">Contract Adjustment</option>
+                    <option value="1">Damage Case</option>
+                    <option value="2">Complaint</option>
+                </select>
+                </p>
             </div>
 
             <div class="form-group">
@@ -48,16 +48,15 @@
                 />
             </div>
 
-            <div class="form-group">
+            <div class="form-group-big">
                 <label for="requestText">Request Text</label>
-                <input
-                        type="text"
+                <textarea
                         class="form-control"
                         id="requestText"
                         required
                         v-model="request.requestText"
                         name="requestText"
-                />
+                ></textarea><p></p>
             </div>
 
             <button @click="makeRequest" class="btn btn-success">Submit</button>
@@ -142,5 +141,8 @@
     .submit-form {
         max-width: 300px;
         margin: auto;
+    }
+    .form-group-big textarea {
+        height: 200px;
     }
 </style>
