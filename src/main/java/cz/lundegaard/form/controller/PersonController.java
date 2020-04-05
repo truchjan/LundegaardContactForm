@@ -14,6 +14,7 @@ import java.util.List;
 /**
  * Spring controller maintains operations for people
  */
+@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:4200", "http://localhost:8081"})
 @RestController
 @RequestMapping(path = "/api/v1/person")
 public class PersonController {
@@ -86,5 +87,10 @@ public class PersonController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(HttpStatus.OK);
+    }
+
+    @GetMapping
+    public PersonDTO findPersonByNameAndSurname(@RequestParam(value="name") String name, @RequestParam(value="surname") String surname) throws ResourceNotFoundException {
+        return personService.findPersonByNameAndSurname(name, surname);
     }
 }

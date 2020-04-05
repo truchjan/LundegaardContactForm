@@ -15,6 +15,7 @@ import javax.validation.Valid;
 /**
  * Spring controller maintains operations for requests
  */
+@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:4200", "http://localhost:8081"})
 @RestController
 @RequestMapping(path = "/api/v1/person/{personId}/request")
 public class RequestController {
