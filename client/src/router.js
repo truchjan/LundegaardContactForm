@@ -6,7 +6,7 @@ Vue.use(Router);
 export default new Router({
     mode: "history",
     routes: [
-        //todo pahts for other featuers like PeopleList(getAll) or Person(update, delete)
+        //todo paths for other features like PeopleList(getAll) or Person(update, delete)
         {
             path: "/add-person",
             name: "add-person",
