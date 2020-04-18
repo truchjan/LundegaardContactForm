@@ -1,40 +1,43 @@
 <template>
-    <div class="submit-form">
-        <div v-if="!submitted">
-            <div class="form-group">
-                <label for="name">Name</label>
-                <input
-                        type="text"
-                        class="form-control"
-                        id="name"
-                        required
-                        v-model="person.name"
-                        name="name"
-                />
-            </div>
-
-            <div class="form-group">
-                <label for="surname">Surname</label>
-                <input
-                        class="form-control"
-                        id="surname"
-                        required
-                        v-model="person.surname"
-                        name="surname"
-                />
-            </div>
-
-            <button @click="savePerson" class="btn btn-success">Submit</button>
+    <form id="submit-form" @submit.prevent>
+        <!--<p v-if="!submitted">-->
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input
+                    type="text"
+                    class="form-control"
+                    id="name"
+                    required
+                    v-model="person.name"
+                    name="name"
+            />
+            <div class="error" v-if="!$v.person.name.required">Name is required</div>
         </div>
 
-        <div v-else>
-            <h4>You submitted successfully!</h4>
-            <button class="btn btn-success" @click="newPerson">Add another person</button>
+        <div class="form-group">
+            <label for="surname">Surname</label>
+            <input
+                    class="form-control"
+                    id="surname"
+                    required
+                    v-model="person.surname"
+                    name="surname"
+            />
+            <div class="error" v-if="!$v.person.surname.required">Surname is required</div>
         </div>
-    </div>
+
+        <button @click="savePerson" class="btn btn-success">Submit</button>
+        <!--</div>-->
+
+        <!--<div v-else>-->
+        <!--<h4>You submitted successfully!</h4>-->
+        <!--<button class="btn btn-success" @click="newPerson">Add another person</button>-->
+        <!--</div>-->
+    </form>
 </template>
 
 <script>
+    import {required} from "vuelidate/lib/validators";
     import PersonDataService from "../service/PersonDataService";
 
     export default {
@@ -56,6 +59,9 @@
                     surname: this.person.surname
                 };
 
+                if (!this.$v.person.name.required || !this.$v.person.surname.required)
+                    return;
+
                 PersonDataService.create(data)
                     .then(response => {
                         this.person.id = response.data.id;
@@ -71,13 +77,22 @@
                 this.submitted = false;
                 this.person = {};
             }
+        },
+        validations: {
+            person: {
+                name: {required},
+                surname: {required}
+            }
         }
     };
 </script>
 
 <style>
-    .submit-form {
+    .form-group {
         max-width: 300px;
-        margin: auto;
+    }
+
+    .error {
+        color: red;
     }
 </style>
